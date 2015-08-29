@@ -10,10 +10,10 @@ WyGoesWith.Preloader.prototype = {
 
 	preload: function () {
 
-		this.load.image('grub', 'assets/grub/grub.png')
-		this.load.image('cake', 'assets/food/cake.png');
+      		this.load.atlasJSONHash('grub', 'assets/anims/wy_spritesheet_packed.png', 'assets/anims/wy_spritesheet_packed.json');
+      		this.load.image('cake', 'assets/food/cake.png');
 
-	},
+      	},
 
 	create: function () {
 
