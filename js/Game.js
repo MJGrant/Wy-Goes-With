@@ -18,6 +18,7 @@ WyGoesWith.Game.prototype = {
 		this.assets.grub.animations.add('idle', Phaser.Animation.generateFrameNames('wy-idle_' , 0 ,  11, '.png', 2), 15, true);
 		this.assets.grub.animations.add('walk', Phaser.Animation.generateFrameNames('wy-walk_' , 0 ,  11, '.png', 2), 15, true);
 
+		this.grubStateIdle();
 		this.startGrubStateLoop(this.grubStateWalk);
     },
 	update: function () {},
@@ -31,16 +32,20 @@ WyGoesWith.Game.prototype = {
 	grubStateWalk: function() {
 		console.log("walk state");
 		this.assets.grub.animations.play('walk', 30, true);
-	/*
-		var tween = this.add.tween(this.grub)
-			.to({	x: this.getRandom(0,1024 - this.grub.width),
-					y: this.getRandom(0,768 - this.grub.height)},
+
+		var tween = this.add.tween(this.assets.grub)
+			.to({	x: this.getRandom(0,1024 - this.assets.grub.width),
+					y: this.getRandom(0,768 - this.assets.grub.height)},
 					2000, Phaser.Easing.Linear.None, true);
-		tween.onComplete.add(this.restartWalkTimer, this);
-		*/
+		tween.onComplete.add(this.stopGrubStateLoop, this);
+	},
+	stopGrubStateLoop: function() {
+		this.time.events.stop();
+		this.grubStateIdle();
+		this.startGrubStateLoop(this.grubStateWalk);
 	},
 	startGrubStateLoop: function(animState) {
-		this.grubStateIdle();
-		this.time.events.repeat(Phaser.Timer.SECOND * 4, 10, animState, this);
+		this.time.events.start();
+		this.time.events.loop(Phaser.Timer.SECOND * 4, animState, this);
 	}
 };
