@@ -33,7 +33,7 @@ WyGoesWith.Game.prototype = {
 		var foodX = getRandom(0,1024);
 		var foodY = getRandom(0,768);
 		this.assets.cake = this.add.sprite(foodX,foodY, 'cake');
-		this.stateWalk(foodX, foodY);
+		this.assets.grub.stateWalk(foodX, foodY);
 		//todo: disable cake button until the cake is eaten
 		//todo: walk wy to the cake's coordinates
 
