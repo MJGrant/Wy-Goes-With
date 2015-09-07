@@ -7,16 +7,18 @@ WyGoesWith.Game.prototype = {
 	create: function () {
 		this.stage.backgroundColor = '#66CCFF';
 
-		this.assets.grub = new Grub(this);
-		console.log(this.assets.grub);
+		this.assets.grub = new Grub(this, game.time);
 
-		//add the food button
 		//todo: investigate shoebox for packing button sprites
-		this.assets.foodButton = this.add.button(200, 300, 'cake', this.spawnFood, this, 1, 1, 0);
+
+		//ui
+		this.assets.foodButton = this.add.button(200, 300, 'button', this.spawnFood, this, 1, 1, 0);
+
 		//add grub sprite and the walk and idle animations
 		this.assets.grub.stateIdle();
 		this.startGrubStateLoop(this.assets.grub.stateWalk);
     },
+
 	update: function () {},
 
 	stopGrubStateLoop: function() {
@@ -36,6 +38,5 @@ WyGoesWith.Game.prototype = {
 		this.assets.grub.stateWalk(foodX, foodY);
 		//todo: disable cake button until the cake is eaten
 		//todo: walk wy to the cake's coordinates
-
 	}
 };

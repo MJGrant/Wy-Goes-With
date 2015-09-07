@@ -1,5 +1,7 @@
-var Grub = function(game) {
+var Grub = function(game, time) {
     this.name = "Wy";
+    this.time = time;
+    var scope = this;
     this.game = game;
     this.grub = this.game.add.sprite(300, 200, 'grub');
     this.grub.tween = {};
@@ -7,6 +9,17 @@ var Grub = function(game) {
     this.grub.animations.add('idle', Phaser.Animation.generateFrameNames('wy-idle_' , 0 ,  11, '.png', 2), 15, true);
     this.grub.animations.add('walk', Phaser.Animation.generateFrameNames('wy-walk_' , 0 ,  11, '.png', 2), 15, true);
     this.grub.anchor.setTo(.5,1);
+
+    //enable click and hold on grub
+    this.grub.inputEnabled = true;
+    this.grub.events.onInputDown.add(function() {
+        scope.statePickedUp();
+    });
+    this.grub.events.onInputUp.add(function() {
+        time.events.start();
+        game.startGrubStateLoop(scope.stateWalk);
+    });
+    this.grub.input.enableDrag(true);
 };
 
 //Grub.prototype = Object.create(this.game.sprite);
@@ -48,6 +61,9 @@ Grub.prototype.stateWalk = function(x, y) {
     tween.onComplete.add(this.game.stopGrubStateLoop, this.game);
 };
 
+Grub.prototype.statePickedUp = function() {
+    this.time.events.stop();
+};
 
 Grub.prototype.getRandomWalkPoint = function() {
     return new Phaser.Point(
