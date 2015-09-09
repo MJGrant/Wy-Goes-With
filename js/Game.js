@@ -14,22 +14,13 @@ WyGoesWith.Game.prototype = {
 		//ui
 		this.assets.foodButton = this.add.button(200, 300, 'button', this.spawnFood, this, 1, 1, 0);
 
-		//add grub sprite and the walk and idle animations
+		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
 		this.assets.grub.stateIdle();
-		this.startGrubStateLoop(this.assets.grub.stateWalk);
+		this.assets.grub.startGrubStateLoop();
     },
 
 	update: function () {},
 
-	stopGrubStateLoop: function() {
-		this.time.events.stop();
-		this.assets.grub.stateIdle();
-		this.startGrubStateLoop(this.assets.grub.stateWalk);
-	},
-	startGrubStateLoop: function(animState) {
-		this.time.events.start();
-		this.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), animState, this.assets.grub);
-	},
 	spawnFood: function() {
 		//place a random cake on the stage
 		var foodX = getRandom(0,1024);
