@@ -14,7 +14,6 @@ WyGoesWith.Grub = function(game, time) {
     this.animations.add('idle', Phaser.Animation.generateFrameNames('wy-idle_' , 0 ,  11, '.png', 2), 15, true);
     this.animations.add('walk', Phaser.Animation.generateFrameNames('wy-walk_' , 0 ,  11, '.png', 2), 15, true);
 
-
     //enable click and hold on grub
     this.inputEnabled = true;
     this.events.onInputDown.add(function() {
@@ -36,13 +35,16 @@ WyGoesWith.Grub.prototype = Object.create(Phaser.Sprite.prototype);
 WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
 WyGoesWith.Grub.prototype.stateIdle = function() {
-    this.grub.animations.play('idle',30, true);
+    console.log("idling!");
+    this.animations.play('idle',30, true);
 };
-
 
 WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
 
+console.log("walking!");
+
     //play walk animation and send him off towards a randomly chosen point
+    console.log(this);
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
 
@@ -52,11 +54,14 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
     if (x && y) {
         walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
     } else {
-        walkDest = Grub.Prototype.getRandomWalkPoint();
+        walkDest = this.getRandomWalkPoint();
     }
 
+console.log(walkDest);
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
+
     var timeToWalk = Phaser.Point.distance(currentPos, walkDest) * 5;
+
     //flip him to face the direction he walks in
     if (this.x > walkDest.x) {
         this.scale.x = 1;
@@ -65,9 +70,11 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
     }
 
     //tween it! when the tween is done, stop the grub state loop
-    var tween = this.game.add.tween(this.grub)
-        .to({	x: walkDest.x,
-            y: walkDest.y},
+    var tween = this.game.add.tween(this)
+        .to({
+            x: walkDest.x,
+            y: walkDest.y
+            },
         timeToWalk, Phaser.Easing.Linear.None, true);
 
     tween.onComplete.add(this.stopGrubStateLoop, this.game);
