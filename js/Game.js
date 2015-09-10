@@ -1,5 +1,7 @@
 WyGoesWith.Game = function (game) {
 	this.assets = {};
+
+	this.grub;
 };
 
 WyGoesWith.Game.prototype = {
@@ -7,7 +9,7 @@ WyGoesWith.Game.prototype = {
 	create: function () {
 		this.stage.backgroundColor = '#66CCFF';
 
-		this.assets.grub = new Grub(this, game.time);
+		this.grub = new WyGoesWith.Grub(this.game, game.time);
 
 		//todo: investigate shoebox for packing button sprites
 
@@ -15,8 +17,9 @@ WyGoesWith.Game.prototype = {
 		this.assets.foodButton = this.add.button(200, 300, 'button', this.spawnFood, this, 1, 1, 0);
 
 		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
-		this.assets.grub.stateIdle();
-		this.assets.grub.startGrubStateLoop();
+
+		//this.assets.grub.stateIdle();
+		//this.assets.grub.startGrubStateLoop();
     },
 
 	update: function () {},
