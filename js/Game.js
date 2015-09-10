@@ -1,5 +1,5 @@
 WyGoesWith.Game = function (game) {
-	this.assets = {};
+	this.grub;
 };
 
 WyGoesWith.Game.prototype = {
@@ -7,29 +7,21 @@ WyGoesWith.Game.prototype = {
 	create: function () {
 		this.stage.backgroundColor = '#66CCFF';
 
-		this.assets.grub = new Grub(this, game.time);
+		this.grub = new WyGoesWith.Grub(this.game, game.time);
 
 		//todo: investigate shoebox for packing button sprites
 
 		//ui
-		this.assets.foodButton = this.add.button(200, 300, 'button', this.spawnFood, this, 1, 1, 0);
+		this.foodButton = this.add.button(200, 300, 'button', this.spawnFood, this, 1, 1, 0);
 
-		//add grub sprite and the walk and idle animations
-		this.assets.grub.stateIdle();
-		this.startGrubStateLoop(this.assets.grub.stateWalk);
+		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
+
+		this.grub.stateIdle();
+		this.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.grub.stateWalk, this.grub);
     },
 
 	update: function () {},
 
-	stopGrubStateLoop: function() {
-		this.time.events.stop();
-		this.assets.grub.stateIdle();
-		this.startGrubStateLoop(this.assets.grub.stateWalk);
-	},
-	startGrubStateLoop: function(animState) {
-		this.time.events.start();
-		this.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), animState, this.assets.grub);
-	},
 	spawnFood: function() {
 		//place a random cake on the stage
 		var foodX = getRandom(0,1024);
