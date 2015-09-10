@@ -24,6 +24,9 @@ var Grub = function(game, time) {
     this.grub.input.enableDrag(true);
 };
 
+Grub.prototype = Object.create(Phaser.Sprite.prototype);
+Grub.prototype.constructor = Grub;
+
 Grub.prototype.stateIdle = function() {
     this.grub.animations.play('idle',30, true);
 };
@@ -31,7 +34,6 @@ Grub.prototype.stateIdle = function() {
 
 Grub.prototype.stateWalk = function(x, y) {
 
-console.log(this);
     //play walk animation and send him off towards a randomly chosen point
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
