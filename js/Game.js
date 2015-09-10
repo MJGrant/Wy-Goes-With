@@ -1,5 +1,6 @@
 WyGoesWith.Game = function (game) {
 	this.grub;
+	this.stageItems = {};
 };
 
 WyGoesWith.Game.prototype = {
@@ -26,8 +27,8 @@ WyGoesWith.Game.prototype = {
 		//place a random cake on the stage
 		var foodX = getRandom(0,1024);
 		var foodY = getRandom(0,768);
-		this.assets.cake = this.add.sprite(foodX,foodY, 'cake');
-		this.assets.grub.stateWalk(foodX, foodY);
+		this.stageItems.cake = this.add.sprite(foodX,foodY, 'cake');
+		this.grub.stateWalk(foodX, foodY);
 		//todo: disable cake button until the cake is eaten
 		//todo: walk wy to the cake's coordinates
 	}
