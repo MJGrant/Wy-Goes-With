@@ -31,20 +31,18 @@ WyGoesWith.Grub = function(game, time) {
     return this;
 };
 
+
 WyGoesWith.Grub.prototype = Object.create(Phaser.Sprite.prototype);
 WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
 WyGoesWith.Grub.prototype.stateIdle = function() {
-    console.log("idling!");
     this.animations.play('idle',30, true);
 };
 
+
 WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
 
-console.log("walking!");
-
     //play walk animation and send him off towards a randomly chosen point
-    console.log(this);
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
 
@@ -57,7 +55,6 @@ console.log("walking!");
         walkDest = this.getRandomWalkPoint();
     }
 
-console.log(walkDest);
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
 
     var timeToWalk = Phaser.Point.distance(currentPos, walkDest) * 5;
@@ -77,12 +74,13 @@ console.log(walkDest);
             },
         timeToWalk, Phaser.Easing.Linear.None, true);
 
-    tween.onComplete.add(this.stopGrubStateLoop, this.game);
+    tween.onComplete.add(this.stopGrubStateLoop, this);
 };
 
 WyGoesWith.Grub.prototype.statePickedUp = function() {
     this.time.events.stop();
 };
+
 
 WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
     return new Phaser.Point(
@@ -90,13 +88,15 @@ WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
         getRandom(0,768 - this.height));
 };
 
+
 WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
     this.time.events.stop();
     this.stateIdle();
     this.startGrubStateLoop(this.stateWalk);
 };
 
+
 WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
     game.time.events.start();
-    game.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.stateWalk, this.grub);
+    game.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.stateWalk, this);
 };
