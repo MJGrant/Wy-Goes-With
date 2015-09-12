@@ -1,5 +1,6 @@
 WyGoesWith.Game = function (game) {
 	this.grub;
+	this.ui = {};
 	this.stageItems = {};
 };
 
@@ -13,7 +14,8 @@ WyGoesWith.Game.prototype = {
 		//todo: investigate shoebox for packing button sprites
 
 		//ui
-		this.foodButton = this.add.button(200, 300, 'button', this.spawnFood, this, 1, 1, 0);
+		this.ui.foodButton = new WyGoesWith.Button(this.game, 200, 300, 'button', this.spawnFood, this.game);
+		//this.foodButton.activate();
 
 		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
 
@@ -29,6 +31,7 @@ WyGoesWith.Game.prototype = {
 		var foodY = getRandom(0,768);
 		this.stageItems.cake = this.add.sprite(foodX,foodY, 'cake');
 		this.grub.stateWalk(foodX, foodY);
+		//this.foodButton.deactivate();
 		//todo: disable cake button until the cake is eaten
 		//todo: walk wy to the cake's coordinates
 	}
