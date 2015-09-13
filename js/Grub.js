@@ -39,7 +39,7 @@ WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
 
 WyGoesWith.Grub.prototype.stateIdle = function() {
-    console.log("Idling...");
+    console.log("Idling at x: " + this.x + " y: " + this.y);
     this.animations.play('idle',30, true);
 };
 
@@ -55,7 +55,7 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
     } else {
         this.walkDest = this.getRandomWalkPoint();
     }
-    console.log("Walking to: " + this.walkDest);
+    console.log("Walking to x: " + this.walkDest.x + " y: " + this.walkDest.y);
 
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
     var timeToWalk = Phaser.Point.distance(currentPos, this.walkDest) * 5;
@@ -98,6 +98,7 @@ WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
 
 
 WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
+    console.log("STOPPING grub state loop and calling idle...");
     this.time.events.stop();
     this.stateIdle();
     this.startGrubStateLoop(this.stateWalk);
@@ -105,8 +106,9 @@ WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
 
 
 WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
+    console.log("STARTING grub state loop...(he's gonna walk when the timer's up)");
     game.time.events.start();
-    game.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.stateWalk, this);
+    game.time.events.loop(Phaser.Timer.SECOND * getRandom(3,5), this.stateWalk, this);
 };
 
 WyGoesWith.Grub.prototype.stateEat = function() {
