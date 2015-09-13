@@ -44,10 +44,8 @@ WyGoesWith.Grub.prototype.stateIdle = function() {
 
 WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
     console.log("Walking...");
+
     //play walk animation and send him off towards a randomly chosen point
-    if (target) {
-        this.target = target;
-    }
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
 
@@ -79,6 +77,7 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
         timeToWalk, Phaser.Easing.Linear.None, true);
 
     if (target) {
+        this.target = target;
         //does wy have a target object? if so, do stuff here (for now it's just food, should be expanded to a variety of target objects later)
         tween.onComplete.add(this.stateEat, this);
     } else {
