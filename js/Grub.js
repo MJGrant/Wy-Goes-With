@@ -6,6 +6,8 @@ WyGoesWith.Grub = function(game, time) {
     this.time = time;
     this.game = game;
     this.name = "Wy";
+    this.target = {};
+    this.walkDest = {};
 
     this.anchor.setTo(.5,1);
 
@@ -36,31 +38,32 @@ WyGoesWith.Grub.prototype = Object.create(Phaser.Sprite.prototype);
 WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
 WyGoesWith.Grub.prototype.stateIdle = function() {
+    console.log("Idling...");
     this.animations.play('idle',30, true);
 };
 
 
-WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
+WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
+    console.log("Walking...");
 
     //play walk animation and send him off towards a randomly chosen point
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
 
     //use x and y if they exist, otherwise pick a random point (he's idling)
-    var walkDest =  {};
 
     if (x && y) {
-        walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
+        this.walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
     } else {
-        walkDest = this.getRandomWalkPoint();
+        this.walkDest = this.getRandomWalkPoint();
     }
+    console.log(this.walkDest);
 
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
-
-    var timeToWalk = Phaser.Point.distance(currentPos, walkDest) * 5;
+    var timeToWalk = Phaser.Point.distance(currentPos, this.walkDest) * 5;
 
     //flip him to face the direction he walks in
-    if (this.x > walkDest.x) {
+    if (this.x > this.walkDest.x) {
         this.scale.x = 1;
     } else {
         this.scale.x = -1;
@@ -69,12 +72,19 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
     //tween it! when the tween is done, stop the grub state loop
     var tween = this.game.add.tween(this)
         .to({
-            x: walkDest.x,
-            y: walkDest.y
+            x: this.walkDest.x,
+            y: this.walkDest.y
             },
         timeToWalk, Phaser.Easing.Linear.None, true);
 
-    tween.onComplete.add(this.stopGrubStateLoop, this);
+    if (target) {
+        this.target = target;
+        //does wy have a target object? if so, do stuff here (for now it's just food, should be expanded to a variety of target objects later)
+        tween.onComplete.add(this.stateEat, this);
+    } else {
+        //no target? he's just idling
+        tween.onComplete.add(this.stopGrubStateLoop, this);
+    }
 };
 
 WyGoesWith.Grub.prototype.statePickedUp = function() {
@@ -99,4 +109,10 @@ WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
 WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
     game.time.events.start();
     game.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.stateWalk, this);
+};
+
+WyGoesWith.Grub.prototype.stateEat = function() {
+    console.log("EATING...");
+    console.log(this.target);
+    this.startGrubStateLoop(this.stateIdle);
 };

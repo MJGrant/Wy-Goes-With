@@ -15,7 +15,9 @@ WyGoesWith.Preloader.prototype = {
 
 		this.load.atlasJSONHash('grub', 'assets/anims/wy_spritesheet_packed.png', 'assets/anims/wy_spritesheet_packed.json');
 		this.load.image('cake', 'assets/food/cake.png');
-		this.load.image('button', 'assets/ui/hud_button_square.png');
+
+		this.load.image('fork', 'assets/ui/btnArtFood.png');
+		this.load.image('square-button', 'assets/ui/hud_button_square.png');
 
       	},
 
