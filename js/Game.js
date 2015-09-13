@@ -42,12 +42,9 @@ WyGoesWith.Game.prototype = {
 			this.openInfo, this, 0, 0, 0, 0);
 		this.ui.infoButton.activate();
 
-
-
 		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
 		this.grub.stateIdle();
 		this.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.grub.stateWalk, this.grub);
-
     },
 
 	update: function () {},

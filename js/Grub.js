@@ -23,7 +23,7 @@ WyGoesWith.Grub = function(game, time) {
     });
     this.events.onInputUp.add(function() {
         time.events.start();
-        scope.startGrubStateLoop(scope.stateWalk);
+        scope.stateFall(scope.stateWalk);
     });
     this.input.enableDrag(true);
 
@@ -47,8 +47,8 @@ WyGoesWith.Grub.prototype.stateIdle = function() {
 WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
     //play walk animation and send him off towards a randomly chosen point
     this.animations.play('walk', 30, true);
-    var currentPos = new Phaser.Point(this.x, this.y);
 
+    var currentPos = new Phaser.Point(this.x, this.y);
     //use x and y if they exist, otherwise pick a random point (he's idling)
     if (x && y) {
         this.walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
@@ -86,7 +86,20 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
 };
 
 WyGoesWith.Grub.prototype.statePickedUp = function() {
+    this.animations.play('walk',30, true);
     this.time.events.stop();
+};
+
+WyGoesWith.Grub.prototype.stateFall = function() {
+    this.animations.play('idle',30, true);
+    this.time.events.stop();
+    this.game.add.tween(this)
+        .to({
+            x: this.x,
+            y: this.y + 200
+        },
+        300, Phaser.Easing.Exponential.None, true);
+
 };
 
 

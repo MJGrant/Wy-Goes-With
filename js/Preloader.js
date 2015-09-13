@@ -26,6 +26,8 @@ WyGoesWith.Preloader.prototype = {
 		//ui button rectangles
 		this.load.image('square-button', 'assets/ui/hud_button_square.png');
 
+		//particles
+
       	},
 
 	create: function () {
