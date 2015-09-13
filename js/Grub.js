@@ -6,6 +6,7 @@ WyGoesWith.Grub = function(game, time) {
     this.time = time;
     this.game = game;
     this.name = "Wy";
+    this.target = {};
 
     this.anchor.setTo(.5,1);
 
@@ -36,13 +37,17 @@ WyGoesWith.Grub.prototype = Object.create(Phaser.Sprite.prototype);
 WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
 WyGoesWith.Grub.prototype.stateIdle = function() {
+    console.log("Idling...");
     this.animations.play('idle',30, true);
 };
 
 
-WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
-
+WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
+    console.log("Walking...");
     //play walk animation and send him off towards a randomly chosen point
+    if (target) {
+        this.target = target;
+    }
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
 
@@ -56,7 +61,6 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
     }
 
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
-
     var timeToWalk = Phaser.Point.distance(currentPos, walkDest) * 5;
 
     //flip him to face the direction he walks in
@@ -74,7 +78,13 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y) {
             },
         timeToWalk, Phaser.Easing.Linear.None, true);
 
-    tween.onComplete.add(this.stopGrubStateLoop, this);
+    if (target) {
+        //does wy have a target object? if so, do stuff here (for now it's just food, should be expanded to a variety of target objects later)
+        tween.onComplete.add(this.stateEat, this);
+    } else {
+        //no target? he's just idling
+        tween.onComplete.add(this.stopGrubStateLoop, this);
+    }
 };
 
 WyGoesWith.Grub.prototype.statePickedUp = function() {
@@ -99,4 +109,10 @@ WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
 WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
     game.time.events.start();
     game.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.stateWalk, this);
+};
+
+WyGoesWith.Grub.prototype.stateEat = function() {
+    console.log("EATING...");
+    console.log(this.target);
+    this.startGrubStateLoop(this.stateIdle);
 };
