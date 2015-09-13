@@ -29,7 +29,6 @@ WyGoesWith.UIButton.prototype.setIcon = function(icon) {
 
 
 WyGoesWith.UIButton.prototype.activate = function() {
-    console.log("button activated");
     this.input.enabled = true;
 };
 

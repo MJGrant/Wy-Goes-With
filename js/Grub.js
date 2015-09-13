@@ -99,7 +99,6 @@ WyGoesWith.Grub.prototype.stateFall = function() {
             y: this.y + 200
         },
         300, Phaser.Easing.Exponential.None, true);
-
 };
 
 
