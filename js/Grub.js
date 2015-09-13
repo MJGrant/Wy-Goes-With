@@ -7,6 +7,7 @@ WyGoesWith.Grub = function(game, time) {
     this.game = game;
     this.name = "Wy";
     this.target = {};
+    this.walkDest = {};
 
     this.anchor.setTo(.5,1);
 
@@ -50,19 +51,19 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
     var currentPos = new Phaser.Point(this.x, this.y);
 
     //use x and y if they exist, otherwise pick a random point (he's idling)
-    var walkDest =  {};
 
     if (x && y) {
-        walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
+        this.walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
     } else {
-        walkDest = this.getRandomWalkPoint();
+        this.walkDest = this.getRandomWalkPoint();
     }
+    console.log(this.walkDest);
 
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
-    var timeToWalk = Phaser.Point.distance(currentPos, walkDest) * 5;
+    var timeToWalk = Phaser.Point.distance(currentPos, this.walkDest) * 5;
 
     //flip him to face the direction he walks in
-    if (this.x > walkDest.x) {
+    if (this.x > this.walkDest.x) {
         this.scale.x = 1;
     } else {
         this.scale.x = -1;
@@ -71,8 +72,8 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
     //tween it! when the tween is done, stop the grub state loop
     var tween = this.game.add.tween(this)
         .to({
-            x: walkDest.x,
-            y: walkDest.y
+            x: this.walkDest.x,
+            y: this.walkDest.y
             },
         timeToWalk, Phaser.Easing.Linear.None, true);
 
