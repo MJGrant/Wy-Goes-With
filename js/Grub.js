@@ -37,6 +37,7 @@ WyGoesWith.Grub = function(game, time) {
 WyGoesWith.Grub.prototype = Object.create(Phaser.Sprite.prototype);
 WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
+
 WyGoesWith.Grub.prototype.stateIdle = function() {
     console.log("Idling...");
     this.animations.play('idle',30, true);
@@ -44,20 +45,17 @@ WyGoesWith.Grub.prototype.stateIdle = function() {
 
 
 WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
-    console.log("Walking...");
-
     //play walk animation and send him off towards a randomly chosen point
     this.animations.play('walk', 30, true);
     var currentPos = new Phaser.Point(this.x, this.y);
 
     //use x and y if they exist, otherwise pick a random point (he's idling)
-
     if (x && y) {
         this.walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
     } else {
         this.walkDest = this.getRandomWalkPoint();
     }
-    console.log(this.walkDest);
+    console.log("Walking to: " + this.walkDest);
 
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
     var timeToWalk = Phaser.Point.distance(currentPos, this.walkDest) * 5;
@@ -94,8 +92,8 @@ WyGoesWith.Grub.prototype.statePickedUp = function() {
 
 WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
     return new Phaser.Point(
-        getRandom(0,1024 - this.width),
-        getRandom(0,768 - this.height));
+        getRandom(50,900 - this.width),
+        getRandom(50,740 - this.height));
 };
 
 

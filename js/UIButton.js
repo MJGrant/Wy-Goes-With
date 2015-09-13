@@ -4,9 +4,12 @@ WyGoesWith.UIButton = function(game, x, y, icon, buttonArt, callback, callbackCo
     //but this one is strict about the parameters it takes
     Phaser.Button.call(this, game, x, y, buttonArt, callback, callbackContext, overFrame, outFrame, downFrame, upFrame);
 
+    this.anchor.setTo(.5, .5);
+
     if (icon) {
         this.setIcon(icon);
     }
+
     //add button to stage
     game.add.existing(this);
 };
@@ -18,9 +21,10 @@ WyGoesWith.UIButton.prototype.constructor = WyGoesWith.UIButton;
 
 WyGoesWith.UIButton.prototype.setIcon = function(icon) {
     this.icon = game.add.sprite(0, 0, icon);
+    this.icon.anchor.setTo(.5, .5);
     this.addChild(this.icon);
-    this.icon.x = Math.floor((this.width - this.icon.width)*0.5);
-    this.icon.y = Math.floor((this.height - this.icon.height)*0.5);
+    this.icon.x = 0;
+    this.icon.y = 0;
 };
 
 

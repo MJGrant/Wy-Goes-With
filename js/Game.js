@@ -14,14 +14,40 @@ WyGoesWith.Game.prototype = {
 		//todo: investigate shoebox for packing button sprites
 
 		//ui
-		this.ui.foodButton = new WyGoesWith.UIButton(game, 200, 300, 'fork', 'square-button', this.spawnFood, this, 0, 0, 0, 0);
+		var stageCenter = game.world.width / 2;
+		var uiButtonY = game.world.height - 20;
 
+		//food
+		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, uiButtonY, 'food', 'square-button',
+			this.spawnFood, this, 0, 0, 0, 0);
 		this.ui.foodButton.activate();
 
-		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
+		//play
+		this.ui.playButton = new WyGoesWith.UIButton(game, stageCenter - 150, uiButtonY, 'play', 'square-button',
+			this.spawnBall, this, 0, 0, 0, 0);
+		this.ui.playButton.activate();
 
+		//sleep
+		this.ui.sleepButton = new WyGoesWith.UIButton(game, stageCenter, uiButtonY, 'sleep', 'square-button',
+			this.spawnPillow, this, 0, 0, 0, 0);
+		this.ui.sleepButton.activate();
+
+		//wash
+		this.ui.bathButton = new WyGoesWith.UIButton(game, stageCenter + 150, uiButtonY, 'wash', 'square-button',
+			this.spawnBath, this, 0, 0, 0, 0);
+		this.ui.bathButton.activate();
+
+		//info
+		this.ui.infoButton = new WyGoesWith.UIButton(game, stageCenter + 300, uiButtonY, 'info', 'square-button',
+			this.openInfo, this, 0, 0, 0, 0);
+		this.ui.infoButton.activate();
+
+
+
+		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up
 		this.grub.stateIdle();
 		this.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.grub.stateWalk, this.grub);
+
     },
 
 	update: function () {},
@@ -34,5 +60,21 @@ WyGoesWith.Game.prototype = {
 		this.stageItems.cake = this.add.sprite(foodX,foodY, 'cake');
 		this.grub.stateWalk(foodX, foodY, this.stageItems.cake);
 		this.ui.foodButton.deactivate();
+	},
+
+	spawnBall: function() {
+		console.log("spawning ball");
+	},
+
+	spawnPillow: function() {
+		console.log("spawning pillow");
+	},
+
+	spawnBath: function() {
+		console.log("spawning bath");
+	},
+
+	openInfo: function() {
+		console.log("opening info pane");
 	}
 };
