@@ -7,6 +7,8 @@ WyGoesWith.Game = function (game) {
 WyGoesWith.Game.prototype = {
 
 	create: function () {
+		this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
 		this.stage.backgroundColor = '#66CCFF';
 
 		this.grub = new WyGoesWith.Grub(this.game, game.time);

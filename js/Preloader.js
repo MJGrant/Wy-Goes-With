@@ -10,9 +10,6 @@ WyGoesWith.Preloader.prototype = {
 
 	preload: function () {
 
-		this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
-		//this.scale.pageAlignVertically = true;
-
 		this.load.atlasJSONHash('grub', 'assets/anims/wy_spritesheet_packed.png', 'assets/anims/wy_spritesheet_packed.json');
 		this.load.image('cake', 'assets/food/cake.png');
 
