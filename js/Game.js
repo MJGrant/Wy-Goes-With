@@ -7,10 +7,14 @@ WyGoesWith.Game = function (game) {
 WyGoesWith.Game.prototype = {
 
 	create: function () {
-		this.WyGameScale = new Phaser.ScaleManager(game, window.innerWidth, window.innerHeight);
-		this.WyGameScale.scaleMode = Phaser.ScaleManager.RESIZE;
-		this.WyGameScale.setResizeCallback(function() {
-			console.log("resizing is happening");
+		console.log(this.game.scale);
+		//this.WyGameScale = new Phaser.ScaleManager(game, window.innerWidth, window.innerHeight);
+		this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
+		//this.gameWindow = new Phaser.Rectangle(0,0,window.innerWidth, window.innerHeight);
+		this.game.scale.setResizeCallback(function () {
+			this.stage.height = window.innerHeight;
+			console.log("stage height: " + this.stage.height);
 		}, this);
 
 		this.stage.backgroundColor = '#66CCFF';
