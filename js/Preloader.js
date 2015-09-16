@@ -10,6 +10,15 @@ WyGoesWith.Preloader.prototype = {
 
 	preload: function () {
 
+		this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		this.game.scale.setShowAll();
+		window.addEventListener('resize', function () {
+			this.game.scale.refresh();
+		});
+		this.game.scale.refresh();
+
+		//http://www.html5gamedevs.com/topic/13177-canvas-resize-how-to-always-make-entire-game-visible/
+
 		this.load.atlasJSONHash('grub', 'assets/anims/wy_spritesheet_packed.png', 'assets/anims/wy_spritesheet_packed.json');
 		this.load.image('cake', 'assets/food/cake.png');
 

@@ -17,7 +17,9 @@ WyGoesWith.Game.prototype = {
 
 		//ui
 		var stageCenter = game.world.width / 2;
-		var uiButtonY = game.world.height - 20;
+		var canvas = document.getElementById('canvas');
+		var uiButtonY = game.world.height - 70; //subtract button height plus a bit more
+		console.log("stage height:" + game.world.stage.height);
 
 		//food
 		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, uiButtonY, 'food', 'square-button',
@@ -49,7 +51,8 @@ WyGoesWith.Game.prototype = {
 		this.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.grub.stateWalk, this.grub);
     },
 
-	update: function () {},
+	update: function () {
+	},
 
 	spawnFood: function() {
 		console.log("spawning food");
