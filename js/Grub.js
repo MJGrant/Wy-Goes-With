@@ -18,6 +18,7 @@ WyGoesWith.Grub = function(game, time) {
 
     //enable click and hold on grub
     this.inputEnabled = true;
+    this.input.useHandCursor = true;
     this.events.onInputDown.add(function() {
         scope.statePickedUp();
     });
