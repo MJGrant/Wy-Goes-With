@@ -7,7 +7,11 @@ WyGoesWith.Game = function (game) {
 WyGoesWith.Game.prototype = {
 
 	create: function () {
-		this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+		this.WyGameScale = new Phaser.ScaleManager(game, window.innerWidth, window.innerHeight);
+		this.WyGameScale.scaleMode = Phaser.ScaleManager.RESIZE;
+		this.WyGameScale.setResizeCallback(function() {
+			console.log("resizing is happening");
+		}, this);
 
 		this.stage.backgroundColor = '#66CCFF';
 
@@ -17,9 +21,7 @@ WyGoesWith.Game.prototype = {
 
 		//ui
 		var stageCenter = game.world.width / 2;
-		var canvas = document.getElementById('canvas');
 		var uiButtonY = game.world.height - 70; //subtract button height plus a bit more
-		console.log("stage height:" + game.world.stage.height);
 
 		//food
 		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, uiButtonY, 'food', 'square-button',
