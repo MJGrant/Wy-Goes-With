@@ -1,5 +1,6 @@
 WyGoesWith.Game = function (game) {
 	this.grub;
+	this.uiButtonHeight = 70;
 	this.ui = {};
 	this.stageItems = {};
 };
@@ -7,48 +8,46 @@ WyGoesWith.Game = function (game) {
 WyGoesWith.Game.prototype = {
 
 	create: function () {
-		console.log(this.game.scale);
-		//this.WyGameScale = new Phaser.ScaleManager(game, window.innerWidth, window.innerHeight);
-		this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-
-		//this.gameWindow = new Phaser.Rectangle(0,0,window.innerWidth, window.innerHeight);
-		this.game.scale.setResizeCallback(function () {
-			this.stage.height = window.innerHeight;
-			console.log("stage height: " + this.stage.height);
-		}, this);
 
 		this.stage.backgroundColor = '#66CCFF';
 
+		//establish window-resizing capabilities and methods
+		this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+		this.game.scale.setResizeCallback(function () {
+			this.stage.height = window.innerHeight;
+			this.repositionUI(this.ui);
+		}, this);
+
+		//make a grub
 		this.grub = new WyGoesWith.Grub(this.game, game.time);
 
 		//todo: investigate shoebox for packing button sprites
 
-		//ui
+		//set up ui
 		var stageCenter = game.world.width / 2;
-		var uiButtonY = game.world.height - 70; //subtract button height plus a bit more
+		this.uiButtonY = game.world.height - this.uiButtonHeight; //subtract button height plus a bit more
 
-		//food
-		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, uiButtonY, 'food', 'square-button',
+		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, this.uiButtonY, 'food', 'square-button',
 			this.spawnFood, this, 0, 0, 0, 0);
 		this.ui.foodButton.activate();
 
 		//play
-		this.ui.playButton = new WyGoesWith.UIButton(game, stageCenter - 150, uiButtonY, 'play', 'square-button',
+		this.ui.playButton = new WyGoesWith.UIButton(game, stageCenter - 150, this.uiButtonY, 'play', 'square-button',
 			this.spawnBall, this, 0, 0, 0, 0);
 		this.ui.playButton.activate();
 
 		//sleep
-		this.ui.sleepButton = new WyGoesWith.UIButton(game, stageCenter, uiButtonY, 'sleep', 'square-button',
+		this.ui.sleepButton = new WyGoesWith.UIButton(game, stageCenter, this.uiButtonY, 'sleep', 'square-button',
 			this.spawnPillow, this, 0, 0, 0, 0);
 		this.ui.sleepButton.activate();
 
 		//wash
-		this.ui.bathButton = new WyGoesWith.UIButton(game, stageCenter + 150, uiButtonY, 'wash', 'square-button',
+		this.ui.bathButton = new WyGoesWith.UIButton(game, stageCenter + 150, this.uiButtonY, 'wash', 'square-button',
 			this.spawnBath, this, 0, 0, 0, 0);
 		this.ui.bathButton.activate();
 
 		//info
-		this.ui.infoButton = new WyGoesWith.UIButton(game, stageCenter + 300, uiButtonY, 'info', 'square-button',
+		this.ui.infoButton = new WyGoesWith.UIButton(game, stageCenter + 300, this.uiButtonY, 'info', 'square-button',
 			this.openInfo, this, 0, 0, 0, 0);
 		this.ui.infoButton.activate();
 
@@ -58,6 +57,19 @@ WyGoesWith.Game.prototype = {
     },
 
 	update: function () {
+	},
+
+	repositionUI: function(ui) {
+		/*
+		for (var button in ui) {
+			ui[button].y = this.stage.height - 70;
+		}*/
+		var newUIButtonY = this.stage.height - 70;
+		ui.foodButton.y = newUIButtonY;
+		ui.playButton.y = newUIButtonY;
+		ui.sleepButton.y = newUIButtonY;
+		ui.bathButton.y = newUIButtonY;
+		ui.infoButton.y = newUIButtonY;
 	},
 
 	spawnFood: function() {
