@@ -44,30 +44,27 @@ WyGoesWith.Game.prototype = {
 
 		//set up ui
 		var stageCenter = game.world.width / 2;
+		var buttonScale = .70;
 		this.uiButtonY = game.world.height - this.uiButtonHeight; //subtract button height plus a bit more
 
-		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, this.uiButtonY, 'food', 'square-button',
-			this.spawnFood, this, 0, 0, 0, 0);
+		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, this.uiButtonY, 'food', 'square-button', buttonScale, this.spawnFood, this, 0, 0, 0, 0);
 		this.ui.foodButton.activate();
 
 		//play
-		this.ui.playButton = new WyGoesWith.UIButton(game, stageCenter - 150, this.uiButtonY, 'play', 'square-button',
-			this.spawnBall, this, 0, 0, 0, 0);
+		this.ui.playButton = new WyGoesWith.UIButton(game, stageCenter - 150, this.uiButtonY, 'play', 'square-button', buttonScale, this.spawnBall, this, 0, 0, 0, 0);
 		this.ui.playButton.activate();
 
 		//sleep
-		this.ui.sleepButton = new WyGoesWith.UIButton(game, stageCenter, this.uiButtonY, 'sleep', 'square-button',
+		this.ui.sleepButton = new WyGoesWith.UIButton(game, stageCenter, this.uiButtonY, 'sleep', 'square-button', buttonScale,
 			this.spawnPillow, this, 0, 0, 0, 0);
 		this.ui.sleepButton.activate();
 
 		//wash
-		this.ui.bathButton = new WyGoesWith.UIButton(game, stageCenter + 150, this.uiButtonY, 'wash', 'square-button',
-			this.spawnBath, this, 0, 0, 0, 0);
+		this.ui.bathButton = new WyGoesWith.UIButton(game, stageCenter + 150, this.uiButtonY, 'wash', 'square-button', buttonScale, this.spawnBath, this, 0, 0, 0, 0);
 		this.ui.bathButton.activate();
 
 		//info
-		this.ui.infoButton = new WyGoesWith.UIButton(game, stageCenter + 300, this.uiButtonY, 'info', 'square-button',
-			this.openInfo, this, 0, 0, 0, 0);
+		this.ui.infoButton = new WyGoesWith.UIButton(game, stageCenter + 300, this.uiButtonY, 'info', 'square-button', buttonScale, this.openInfo, this, 0, 0, 0, 0);
 		this.ui.infoButton.activate();
 
 		//add grub sprite, make him idle, and kick off the loop that will make him walk when the timer's up

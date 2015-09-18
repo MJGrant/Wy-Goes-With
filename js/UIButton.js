@@ -1,9 +1,11 @@
 //you can pass in whatever you want up here
-WyGoesWith.UIButton = function(game, x, y, icon, buttonArt, callback, callbackContext, overFrame, outFrame, downFrame, upFrame) {
+WyGoesWith.UIButton = function(game, x, y, icon, buttonArt, scale, callback, callbackContext, overFrame, outFrame, downFrame, upFrame) {
 
     //but this one is strict about the parameters it takes
     Phaser.Button.call(this, game, x, y, buttonArt, callback, callbackContext, overFrame, outFrame, downFrame, upFrame);
 
+    this.scale.x = scale;
+    this.scale.y = scale;
     this.anchor.setTo(.5, .5);
 
     if (icon) {
