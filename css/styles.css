@@ -1,6 +1,12 @@
 html {
-    background-color:#fff;
+    background-color:#FFF;
 }
+
+body {
+    margin:0;
+    padding:0;
+}
+
 
 /* Night sky color */
 /* #6666CC */

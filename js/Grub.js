@@ -9,6 +9,11 @@ WyGoesWith.Grub = function(game, time) {
     this.target = {};
     this.walkDest = {};
 
+    this.xScale = .65;
+    this.yScale = .65;
+
+    this.scale.x = this.xScale;
+    this.scale.y = this.yScale;
     this.anchor.setTo(.5,1);
 
     this.tween = {};
@@ -18,12 +23,13 @@ WyGoesWith.Grub = function(game, time) {
 
     //enable click and hold on grub
     this.inputEnabled = true;
+    this.input.useHandCursor = true;
     this.events.onInputDown.add(function() {
         scope.statePickedUp();
     });
     this.events.onInputUp.add(function() {
         time.events.start();
-        scope.startGrubStateLoop(scope.stateWalk);
+        scope.stateFall(scope.stateWalk);
     });
     this.input.enableDrag(true);
 
@@ -37,36 +43,34 @@ WyGoesWith.Grub = function(game, time) {
 WyGoesWith.Grub.prototype = Object.create(Phaser.Sprite.prototype);
 WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
+
 WyGoesWith.Grub.prototype.stateIdle = function() {
-    console.log("Idling...");
-    this.animations.play('idle',30, true);
+    console.log("Idling at x: " + this.x + " y: " + this.y);
+    this.animations.play('idle', 30, true);
 };
 
 
 WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
-    console.log("Walking...");
-
     //play walk animation and send him off towards a randomly chosen point
     this.animations.play('walk', 30, true);
+
     var currentPos = new Phaser.Point(this.x, this.y);
-
     //use x and y if they exist, otherwise pick a random point (he's idling)
-
     if (x && y) {
         this.walkDest = new Phaser.Point((x + this.width / 2), (y + this.height / 2));
     } else {
         this.walkDest = this.getRandomWalkPoint();
     }
-    console.log(this.walkDest);
+    console.log("Walking to x: " + this.walkDest.x + " y: " + this.walkDest.y);
 
     //calculate the time it should take him to walk based on the distance between where he is and where he is going
     var timeToWalk = Phaser.Point.distance(currentPos, this.walkDest) * 5;
 
     //flip him to face the direction he walks in
     if (this.x > this.walkDest.x) {
-        this.scale.x = 1;
+        this.scale.x = this.xScale;
     } else {
-        this.scale.x = -1;
+        this.scale.x = -this.xScale;
     }
 
     //tween it! when the tween is done, stop the grub state loop
@@ -88,18 +92,31 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
 };
 
 WyGoesWith.Grub.prototype.statePickedUp = function() {
+    this.animations.play('walk',30, true);
     this.time.events.stop();
+};
+
+WyGoesWith.Grub.prototype.stateFall = function() {
+    this.animations.play('idle',30, true);
+    this.time.events.stop();
+    this.game.add.tween(this)
+        .to({
+            x: this.x,
+            y: this.y + 150
+        },
+        300, Phaser.Easing.Exponential.None, true);
 };
 
 
 WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
     return new Phaser.Point(
-        getRandom(0,1024 - this.width),
-        getRandom(0,768 - this.height));
+        getRandom(50,900 - this.width),
+        getRandom(100,740 - this.height));
 };
 
 
 WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
+    console.log("STOPPING grub state loop and calling idle...");
     this.time.events.stop();
     this.stateIdle();
     this.startGrubStateLoop(this.stateWalk);
@@ -107,8 +124,9 @@ WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
 
 
 WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
+    console.log("STARTING grub state loop...(he's gonna walk when the timer's up)");
     game.time.events.start();
-    game.time.events.loop(Phaser.Timer.SECOND * getRandom(2,4), this.stateWalk, this);
+    game.time.events.loop(Phaser.Timer.SECOND * getRandom(3,5), this.stateWalk, this);
 };
 
 WyGoesWith.Grub.prototype.stateEat = function() {
