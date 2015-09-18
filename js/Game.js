@@ -1,6 +1,7 @@
 WyGoesWith.Game = function (game) {
 	this.grub;
 	this.uiButtonHeight = 70;
+	this.bgDecor = {};
 	this.ui = {};
 	this.stageItems = {};
 };
@@ -9,13 +10,31 @@ WyGoesWith.Game.prototype = {
 
 	create: function () {
 
+		//setup stage background
 		this.stage.backgroundColor = '#66CCFF';
+		this.bgDecor.cloud1 = this.add.sprite(10, 0, 'cloud1');
+		this.bgDecor.cloud2 = this.add.sprite(150, -45, 'cloud2');
+		this.bgDecor.cloud3 = this.add.sprite(800, -10, 'cloud3');
+
+		var game = this.game;
 
 		//establish window-resizing capabilities and methods
 		this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 		this.game.scale.setResizeCallback(function () {
 			this.stage.height = window.innerHeight;
+			//Phaser.canvas.height = window.innerHeight;
 			this.repositionUI(this.ui);
+
+			var height = window.innerHeight;
+			var width = window.innerWidth;
+			game.width = width;
+			game.height = height;
+
+			if (game.renderType === Phaser.WEBGL)
+			{
+				game.renderer.resize(width, height);
+			}
+
 		}, this);
 
 		//make a grub

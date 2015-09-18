@@ -9,6 +9,11 @@ WyGoesWith.Grub = function(game, time) {
     this.target = {};
     this.walkDest = {};
 
+    this.xScale = .65;
+    this.yScale = .65;
+
+    this.scale.x = this.xScale;
+    this.scale.y = this.yScale;
     this.anchor.setTo(.5,1);
 
     this.tween = {};
@@ -41,7 +46,7 @@ WyGoesWith.Grub.prototype.constructor = WyGoesWith.Grub;
 
 WyGoesWith.Grub.prototype.stateIdle = function() {
     console.log("Idling at x: " + this.x + " y: " + this.y);
-    this.animations.play('idle',30, true);
+    this.animations.play('idle', 30, true);
 };
 
 
@@ -63,9 +68,9 @@ WyGoesWith.Grub.prototype.stateWalk = function(x, y, target) {
 
     //flip him to face the direction he walks in
     if (this.x > this.walkDest.x) {
-        this.scale.x = 1;
+        this.scale.x = this.xScale;
     } else {
-        this.scale.x = -1;
+        this.scale.x = -this.xScale;
     }
 
     //tween it! when the tween is done, stop the grub state loop
@@ -97,7 +102,7 @@ WyGoesWith.Grub.prototype.stateFall = function() {
     this.game.add.tween(this)
         .to({
             x: this.x,
-            y: this.y + 200
+            y: this.y + 150
         },
         300, Phaser.Easing.Exponential.None, true);
 };
@@ -106,7 +111,7 @@ WyGoesWith.Grub.prototype.stateFall = function() {
 WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
     return new Phaser.Point(
         getRandom(50,900 - this.width),
-        getRandom(50,740 - this.height));
+        getRandom(100,740 - this.height));
 };
 
 
