@@ -93,8 +93,9 @@ WyGoesWith.Game.prototype = {
 		//place a random cake on the stage
 		var foodX = getRandom(0,1024);
 		var foodY = getRandom(0,768);
-		this.stageItems.cake = this.add.sprite(foodX,foodY, 'cake');
-		this.grub.stateWalk(foodX, foodY, this.stageItems.cake);
+		var foodType = 'snack';
+		this.stageItems.food = new WyGoesWith.Food(game, foodX, foodY, foodType);
+		this.grub.stateWalk(foodX, foodY, this.stageItems.food);
 		this.ui.foodButton.deactivate();
 	},
 
