@@ -135,7 +135,9 @@ WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
 
 WyGoesWith.Grub.prototype.stateEat = function() {
     this.time.events.stop();
-    console.log("eating this: ", this.target);
+    console.log("eating this: ", this.target.key);
+    console.log("game is: ", game);
+    this.target.destroy();
     this.stateIdle();
     this.startGrubStateLoop(this.stateWalk);
 };
