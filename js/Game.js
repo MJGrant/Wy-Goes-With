@@ -10,6 +10,9 @@ WyGoesWith.Game.prototype = {
 
 	create: function () {
 
+		//keep game running when the browser isn't in focus
+		this.stage.disableVisibilityChange = true;
+
 		//setup stage background
 		this.stage.backgroundColor = '#66CCFF';
 		this.bgDecor.cloud1 = this.add.sprite(10, 0, 'cloud1');
