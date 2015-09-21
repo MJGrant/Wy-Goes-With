@@ -94,7 +94,7 @@ WyGoesWith.Game.prototype = {
 	},
 
 	grubStateWalk: function(x, y, target) {
-		console.log(this); //it's still a game
+		this.time.events.stop();
 		this.grub.walk();
 		var currentPos = new Phaser.Point(this.grub.x, this.grub.y);
 		var walkDest;
@@ -112,7 +112,7 @@ WyGoesWith.Game.prototype = {
 		this.grub.setFacing(walkDest);
 
 		//tween it! when the tween is done, stop the grub state loop
-		var tween = this.game.add.tween(this)
+		var tween = this.game.add.tween(this.grub)
 			.to({
 				x: walkDest.x,
 				y: walkDest.y
@@ -140,6 +140,7 @@ WyGoesWith.Game.prototype = {
 	},
 
 	grubStateFall: function() {
+		console.log("grub falling");
 		this.pauseGrubLoop();
 		this.grub.fall();
 		this.game.add.tween(this.grub)
