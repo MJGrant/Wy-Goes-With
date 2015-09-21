@@ -45,7 +45,7 @@ WyGoesWith.Game.prototype = {
 
 		//attach input listeners to grub
 		this.grub.events.onInputDown.add(function() {
-			this.grubStatePickedUp;
+			this.grubStateGrabbed;
 		});
 		this.grub.events.onInputUp.add(function() {
 			this.grubStateFall;
@@ -134,9 +134,10 @@ WyGoesWith.Game.prototype = {
 		this.grub.idle();
 	},
 
-	grubStatePickedUp: function() {
+	grubStateGrabbed: function() {
 		this.pauseGrubLoop();
-		this.grub.pickedUp();
+		console.log("grub grabbed!");
+		this.grub.grabbed();
 	},
 
 	grubStateFall: function() {

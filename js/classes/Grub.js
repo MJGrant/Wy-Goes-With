@@ -16,6 +16,7 @@ WyGoesWith.Grub = function(game) {
 
     this.animations.add('idle', Phaser.Animation.generateFrameNames('wy-idle_' , 0 ,  11, '.png', 2), 15, true);
     this.animations.add('walk', Phaser.Animation.generateFrameNames('wy-walk_' , 0 ,  11, '.png', 2), 15, true);
+    this.animations.add('grabbedLoop', Phaser.Animation.generateFrameNames('wy-grabbed_loop_' , 0 ,  9, '.png', 2), 15, true);
 
     //enable click and hold on grub
     this.inputEnabled = true;
@@ -44,9 +45,9 @@ WyGoesWith.Grub.prototype.idle = function() {
     this.animations.play('idle', 30, true);
 };
 
-WyGoesWith.Grub.prototype.pickedUp = function() {
+WyGoesWith.Grub.prototype.grabbed = function() {
     console.log("Grub is picked up");
-    this.animations.play('walk', 30, true);
+    this.animations.play('grabbedLoop', 30, true);
 };
 
 WyGoesWith.Grub.prototype.walk = function() {
