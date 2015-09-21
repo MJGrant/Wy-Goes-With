@@ -85,8 +85,8 @@ WyGoesWith.Game.prototype = {
 
 	getRandomWalkPoint: function() {
 		return new Phaser.Point(
-			getRandom(50,900 - this.width),
-			getRandom(100,740 - this.height));
+			getRandom(50,900),
+			getRandom(100,740));
 	},
 
 	grubStateWalk: function(x, y, target) {
@@ -99,6 +99,7 @@ WyGoesWith.Game.prototype = {
 			walkDest = new Phaser.Point((x + this.grub.width / 2), (y + this.grub.height / 2));
 		} else {
 			walkDest = this.getRandomWalkPoint();
+			console.log(walkDest);
 		}
 		//console.log("Walking to x: " + walkDest.x + " y: " + walkDest.y);
 
