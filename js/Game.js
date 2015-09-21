@@ -44,12 +44,8 @@ WyGoesWith.Game.prototype = {
 		this.grub = new WyGoesWith.Grub(this.game);
 
 		//attach input listeners to grub
-		this.grub.events.onInputDown.add(function() {
-			this.grubStateGrabbed;
-		});
-		this.grub.events.onInputUp.add(function() {
-			this.grubStateFall;
-		});
+		this.grub.events.onInputDown.add(this.grubStateGrabbed, this);
+		this.grub.events.onInputUp.add(this.grubStateFall, this);
 		this.grub.input.enableDrag(true);
 
 
