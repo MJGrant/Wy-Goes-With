@@ -120,7 +120,7 @@ WyGoesWith.Grub.prototype.getRandomWalkPoint = function() {
 
 
 WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
-    console.log("STOPPING grub state loop and calling idle...");
+    //console.log("STOPPING grub state loop and calling idle...");
     this.time.events.stop();
     this.stateIdle();
     this.startGrubStateLoop(this.stateWalk);
@@ -128,15 +128,13 @@ WyGoesWith.Grub.prototype.stopGrubStateLoop = function() {
 
 
 WyGoesWith.Grub.prototype.startGrubStateLoop = function() {
-    console.log("STARTING grub state loop...(he's gonna walk when the timer's up)");
+    //console.log("STARTING grub state loop...(he's gonna walk when the timer's up)");
     game.time.events.start();
     game.time.events.loop(Phaser.Timer.SECOND * getRandom(3,5), this.stateWalk, this);
 };
 
 WyGoesWith.Grub.prototype.stateEat = function() {
     this.time.events.stop();
-    console.log("eating this: ", this.target.key);
-    console.log("game is: ", game);
     this.target.destroy();
     this.stateIdle();
     this.startGrubStateLoop(this.stateWalk);
