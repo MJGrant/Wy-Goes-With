@@ -16,7 +16,7 @@ WyGoesWith.Grub = function(game) {
 
     this.animations.add('idle', Phaser.Animation.generateFrameNames('wy-idle_' , 0 ,  11, '.png', 2), 15, true);
     this.animations.add('walk', Phaser.Animation.generateFrameNames('wy-walk_' , 0 ,  11, '.png', 2), 15, true);
-    this.animations.add('grabbedLoop', Phaser.Animation.generateFrameNames('wy-grabbed_loop_' , 0 ,  9, '.png', 2), 15, true);
+    this.animations.add('grabbedLoop', Phaser.Animation.generateFrameNames('wy-grabbed_loop_' , 0 ,  8, '.png', 2), 15, true);
 
     //enable click and hold on grub
     this.inputEnabled = true;
