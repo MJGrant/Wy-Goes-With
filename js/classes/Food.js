@@ -6,12 +6,10 @@ WyGoesWith.Food = function(game, x, y, foodType) {
 
     var random = Math.floor(Math.random() * 6);
     var randomFood = "";
-    console.log("random", random);
 
     if (foodType === "snack") {
-        console.log("getting a snack");
         randomFood = snackArray[random];
-    };
+    }
 
     //but this one is strict about the parameters it takes
     Phaser.Sprite.call(this, game, x, y, randomFood);

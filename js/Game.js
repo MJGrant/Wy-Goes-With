@@ -79,10 +79,6 @@ WyGoesWith.Game.prototype = {
 	},
 
 	repositionUI: function(ui) {
-		/*
-		for (var button in ui) {
-			ui[button].y = this.stage.height - 70;
-		}*/
 		var newUIButtonY = this.stage.height - 70;
 		ui.foodButton.y = newUIButtonY;
 		ui.playButton.y = newUIButtonY;
@@ -92,29 +88,49 @@ WyGoesWith.Game.prototype = {
 	},
 
 	spawnFood: function() {
-		console.log("spawning food");
-		//place a random cake on the stage
 		var foodX = getRandom(0,window.innerWidth);
 		var foodY = getRandom(0,window.innerHeight);
 		var foodType = 'snack';
 		this.stageItems.food = new WyGoesWith.Food(game, foodX, foodY, foodType);
 		this.grub.stateWalk(foodX, foodY, this.stageItems.food);
-		this.ui.foodButton.deactivate();
+		this.disableUI();
 	},
 
 	spawnBall: function() {
 		console.log("spawning ball");
+		this.disableUI();
 	},
 
 	spawnPillow: function() {
 		console.log("spawning pillow");
+		this.disableUI();
 	},
 
 	spawnBath: function() {
 		console.log("spawning bath");
+		this.disableUI();
 	},
 
 	openInfo: function() {
 		console.log("opening info pane");
+		this.disableUI();
+	},
+
+	disableUI: function() {
+		console.log("disabling UI!");
+		this.ui.foodButton.deactivate();
+		this.ui.playButton.deactivate();
+		this.ui.sleepButton.deactivate();
+		this.ui.bathButton.deactivate();
+		this.ui.infoButton.deactivate();
+	},
+
+	enableUI: function() {
+		console.log("enabling UI!");
+		this.ui.foodButton.activate();
+		this.ui.playButton.activate();
+		this.ui.sleepButton.activate();
+		this.ui.bathButton.activate();
+		this.ui.infoButton.activate();
 	}
 };

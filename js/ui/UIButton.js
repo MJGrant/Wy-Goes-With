@@ -32,10 +32,11 @@ WyGoesWith.UIButton.prototype.setIcon = function(icon) {
 
 WyGoesWith.UIButton.prototype.activate = function() {
     this.input.enabled = true;
+    this.tint = 0xFFFFFF;
 };
 
 
 WyGoesWith.UIButton.prototype.deactivate = function() {
-    console.log("button deactivated");
     this.input.enabled = false;
+    this.tint = 0xff00ff;
 };
