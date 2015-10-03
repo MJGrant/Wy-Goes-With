@@ -20,6 +20,7 @@ WyGoesWith.Preloader.prototype = {
 		//http://www.html5gamedevs.com/topic/13177-canvas-resize-how-to-always-make-entire-game-visible/
 
 		this.load.atlasJSONHash('grub', 'assets/anims/wy_spritesheet_packed.png', 'assets/anims/wy_spritesheet_packed.json');
+		this.load.image('shadow', 'assets/grub/shadow.png');
 
 		//background decorations
 		this.load.image('cloud1', 'assets/stage/cloud1.png');

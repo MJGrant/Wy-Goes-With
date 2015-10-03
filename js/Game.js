@@ -1,5 +1,6 @@
 WyGoesWith.Game = function (game) {
 	this.grub;
+	this.grubGroup;
 	this.uiButtonHeight = 70;
 	this.bgDecor = {};
 	this.ui = {};
@@ -42,6 +43,12 @@ WyGoesWith.Game.prototype = {
 
 		//make a grub
 		this.grub = new WyGoesWith.Grub(this.game);
+		this.grub.z = 1;
+
+		//make grub shadow
+		//this.grub.addChild(game.make.sprite(-(this.grub.width / 2), -15, 'shadow'));
+		this.shadow = this.grub.addChild(game.make.sprite(-(this.grub.width / 2), -15, 'shadow'));
+		this.shadow.z = -100;
 
 		//attach input listeners to grub
 		this.grub.events.onInputDown.add(this.grubStateGrabbed, this);
