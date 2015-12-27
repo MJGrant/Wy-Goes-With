@@ -5,6 +5,12 @@ WyGoesWith.Grub = function(game) {
     this.game = game;
     this.target = {};
 
+    this.stats = {
+        name:"Wy",
+        hunger:100,
+        play:100
+    };
+
     this.xScale = .65;
     this.yScale = .65;
 
@@ -17,6 +23,10 @@ WyGoesWith.Grub = function(game) {
     this.animations.add('idle', Phaser.Animation.generateFrameNames('wy-idle_' , 0 ,  11, '.png', 2), 15, true);
     this.animations.add('walk', Phaser.Animation.generateFrameNames('wy-walk_' , 0 ,  11, '.png', 2), 15, true);
     this.animations.add('grabbedLoop', Phaser.Animation.generateFrameNames('wy-grabbed_loop_' , 0 ,  13, '.png', 3), 15, true);
+
+    //make grub shadow
+    this.shadow = this.addChild(this.game.make.sprite(-(this.width / 2), -15, 'shadow'));
+    this.shadow.z = -100;
 
     //enable click and hold on grub
     this.inputEnabled = true;

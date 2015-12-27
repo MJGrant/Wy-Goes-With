@@ -5,6 +5,8 @@ WyGoesWith.Game = function (game) {
 	this.bgDecor = {};
 	this.ui = {};
 	this.stageItems = {};
+
+	this.statUpdateInterval = 1000;
 };
 
 WyGoesWith.Game.prototype = {
@@ -43,24 +45,20 @@ WyGoesWith.Game.prototype = {
 
 		//make a grub
 		this.grub = new WyGoesWith.Grub(this.game);
-		this.grub.z = 1;
-
-		//make grub shadow
-		//this.grub.addChild(game.make.sprite(-(this.grub.width / 2), -15, 'shadow'));
-		this.shadow = this.grub.addChild(game.make.sprite(-(this.grub.width / 2), -15, 'shadow'));
-		this.shadow.z = -100;
 
 		//attach input listeners to grub
 		this.grub.events.onInputDown.add(this.grubStateGrabbed, this);
 		this.grub.events.onInputUp.add(this.grubStateFall, this);
 		this.grub.input.enableDrag(true);
 
+		//put grub stats on the screen
+		console.log("grub stats", this.grub.stats);
 
 		//todo: investigate shoebox for packing button sprites
 
 		//set up ui
 		var stageCenter = game.world.width / 2;
-		var buttonScale = .70;
+		var buttonScale = .70;game.debug.text('Grub name:', 100, 100);
 		this.uiButtonY = game.world.height - this.uiButtonHeight; //subtract button height plus a bit more
 
 		this.ui.foodButton = new WyGoesWith.UIButton(game, stageCenter - 300, this.uiButtonY, 'food', 'square-button', buttonScale, this.spawnFood, this, 0, 0, 0, 0);
@@ -88,6 +86,24 @@ WyGoesWith.Game.prototype = {
     },
 
 	update: function () {
+		this.statUpdateInterval --;
+		if (this.statUpdateInterval <= 0) {
+			this.grub.stats.hunger --;
+			this.grub.stats.play --;
+			this.statUpdateInterval = 1000;
+		}
+	},
+
+	render: function() {
+
+		var x = 50;
+
+		game.debug.text('Grub name:', x, 100);
+		game.debug.text(this.grub.stats.name, x, 120);
+		game.debug.text('Hunger level:', x, 140);
+		game.debug.text(this.grub.stats.hunger, x, 160);
+		game.debug.text('Fun level:', x, 180);
+		game.debug.text(this.grub.stats.play, x, 200);
 	},
 
 	getRandomWalkPoint: function() {
@@ -159,6 +175,14 @@ WyGoesWith.Game.prototype = {
 	grubStateEat: function(target) {
 		this.pauseGrubLoop();
 		this.target.destroy();
+
+		if (this.grub.stats.hunger < 100) {
+			this.grub.stats.hunger += 10;
+			if (this.grub.stats.hunger > 100) {
+				this.grub.stats.hunger = 100;
+			}
+		}
+		
 		this.grubStateIdle();
 		this.enableUI();
 		this.startGrubLoop();
